@@ -1,0 +1,35 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+    <file>images/basket2.png</file>
+    <file>images/calc3.png</file>
+    <file>images/can.png</file>
+    <file>images/channel.png</file>
+    <file>images/check3.png</file>
+    <file>images/cursor1.png</file>
+    <file>images/delete2.png</file>
+    <file>images/delete3.png</file>
+    <file>images/down2.png</file>
+    <file>images/download2.png</file>
+    <file>images/export3.png</file>
+    <file>images/export4.png</file>
+    <file>images/feedback.png</file>
+    <file>images/graph1.png</file>
+    <file>images/grid3.png</file>
+    <file>images/home3.png</file>
+    <file>images/info5.png</file>
+    <file>images/lock3.png</file>
+    <file>images/manual1.png</file>
+    <file>images/open2.png</file>
+    <file>images/range.png</file>
+    <file>images/reset4.png</file>
+    <file>images/right.png</file>
+    <file>images/rom2.png</file>
+    <file>images/search3.png</file>
+    <file>images/splitter.png</file>
+    <file>images/up2.png</file>
+    <file>images/upload2.png</file>
+    <file>images/zoom_in1.png</file>
+    <file>images/zoom_out1.png</file>
+    <file>images/main_icon.ico</file>
+</qresource>
+</RCC>

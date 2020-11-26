@@ -1,0 +1,40 @@
+# -*- coding: utf-8 -*-
+""" Edit history
+    Author : yda
+    Date : 2020-11-12
+
+    Package name changed - asammdf to mdfstudio
+
+    Functions
+    ---------
+    *   ChannelInfoDialog.init        -   Change UI (new button image)
+
+"""
+from PyQt5 import QtCore, QtGui, QtWidgets
+
+from ..widgets.channel_info import ChannelInfoWidget
+
+
+class ChannelInfoDialog(QtWidgets.QDialog):
+    def __init__(self, channel, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.setWindowFlags(QtCore.Qt.Window)
+
+        layout = QtWidgets.QVBoxLayout()
+        self.setLayout(layout)
+
+        self.setWindowTitle(channel.name)
+
+        layout.addWidget(ChannelInfoWidget(channel, self))
+
+        self.setStyleSheet('font: 8pt "Consolas";}')
+
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/images/info5.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+
+        self.setWindowIcon(icon)
+        self.setGeometry(240, 60, 1200, 600)
+
+        screen = QtWidgets.QApplication.desktop().screenGeometry()
+        self.move((screen.width() - 1200) // 2, (screen.height() - 600) // 2)
