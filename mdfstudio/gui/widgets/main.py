@@ -43,6 +43,7 @@ from pathlib import Path
 from textwrap import wrap
 import psutil
 import sys
+import webbrowser
 
 from natsort import natsorted
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -454,8 +455,7 @@ class MainWindow(WithMDIArea, Ui_PyMDFMainWindow, QtWidgets.QMainWindow):
         self.show()
 
     def github(self):
-        url = 'Start iExplore.exe https://github.com/hyundai-autoever-opensource/mdfstudio/'
-        os.system(url)
+        webbrowser.open_new(r"https://github.com/hyundai-autoever-opensource/mdfstudio/")
 
     def plot_action(self, key, modifier=QtCore.Qt.NoModifier):
         event = QtGui.QKeyEvent(QtCore.QEvent.KeyPress, key, modifier)
@@ -1231,5 +1231,4 @@ class MainWindow(WithMDIArea, Ui_PyMDFMainWindow, QtWidgets.QMainWindow):
         widget.exec_()
 
     def open_url(self, event):
-        url = 'Start iExplore.exe https://moaform.com/q/mdBiwO'
-        os.system(url)
+        webbrowser.open_new(r"https://moaform.com/q/mdBiwO")
