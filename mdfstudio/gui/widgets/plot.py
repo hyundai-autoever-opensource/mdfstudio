@@ -1095,13 +1095,17 @@ class Plot(QtWidgets.QWidget):
 
     def export_csv(self, start_end):
         channels = []
+        computed_channels = []
         columns = []
         count = self.channel_selection.count()
         for row in range(count):
             item = self.channel_selection.item(row)
             if self.channel_selection.itemWidget(item).display.checkState() == QtCore.Qt.Checked:
-                group, index = item.entry
-                channels.append((item.name, group, index))
+                if self.plot.signal_by_name(item.name)[0].computed:
+                    computed_channels.append(self.plot.signal_by_name(item.name)[0])
+                else:
+                    group, index = item.entry
+                    channels.append((item.name, group, index))
                 columns.append(item.name)
 
         file_index, file = self.file_info
@@ -1131,6 +1135,8 @@ class Plot(QtWidgets.QWidget):
         # }
 
         new_mdf = file.mdf.filter(channels)
+        new_mdf.append(computed_channels)
+        new_mdf = new_mdf.resample(self.rate)
         if range is not None:
             new_mdf = new_mdf.cut(start=start_end[0], stop=start_end[1])
         # new_mdf = new_mdf.resample(self.rate)
@@ -1145,16 +1151,28 @@ class Plot(QtWidgets.QWidget):
 
     def copy_clipboard(self):
         channels = []
+        computed_channels = []
+        columns = []
+        count = self.channel_selection.count()
 
-        for row in range(self.channel_selection.count()):
+        for row in range(count):
             item = self.channel_selection.item(row)
-            group, index = item.entry
-            channels.append((None, group, index))
+            if self.channel_selection.itemWidget(item).display.checkState() == QtCore.Qt.Checked:
+                if self.plot.signal_by_name(item.name)[0].computed:
+                    computed_channels.append(self.plot.signal_by_name(item.name)[0])
+                else:
+                    group, index = item.entry
+                    channels.append((item.name, group, index))
+                columns.append(item.name)
 
         file_index, file = self.file_info
 
-        df = file.mdf.to_dataframe(
-            channels=channels,
+        new_mdf = file.mdf.filter(channels)
+        new_mdf.append(computed_channels)
+        new_mdf = new_mdf.resample(self.rate)
+
+        df = new_mdf.to_dataframe(
+            channels=columns,
             ignore_value2text_conversions=True,
             time_from_zero=False,
         )
@@ -1163,7 +1181,7 @@ class Plot(QtWidgets.QWidget):
             columns = {name: f"{file_index + 1}: {name}" for name in df.columns}
             df.rename(columns=columns, inplace=True)
 
-        df.to_clipboard(sep=',', index=True)
+        df.to_clipboard(sep='\t', index=True)
 
     def plot_action(self, key, modifier=QtCore.Qt.NoModifier):
         event = QtGui.QKeyEvent(QtCore.QEvent.KeyPress, key, modifier)
