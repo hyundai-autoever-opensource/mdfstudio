@@ -604,6 +604,8 @@ class WithMDIArea:
             self.set_subplots_link(self.subplots_link)
 
             plot.close_request.connect(self.mdi_area.activeSubWindow().close)
+            if tabular is not None:
+                tabular.tree.header().setSectionsMovable(False)
         else:
             #yda 2020-10-08 *UDC*
             # if self.apply_alternative_names:
@@ -655,6 +657,7 @@ class WithMDIArea:
         if "Tabular" in window_type:
             tabular.calculate_pos()
             tabular.display(0)
+
 
     def get_current_plot(self):
         mdi = self.mdi_area.activeSubWindow()
@@ -836,6 +839,9 @@ class WithMDIArea:
                         ch.group_index = sig.group_index
                         ch.channel_index = sig.channel_index
                         ch.color = sig.color
+                        if sig.group_index == -1 and sig.channel_index == -1:
+                            ch.computation = sig.computation
+                            ch.computed = True
                         break
                 resampled_signals.append(ch)
             signals = resampled_signals
@@ -943,7 +949,7 @@ class WithMDIArea:
             if tabular is not None:
                 tabular.calculate_pos(w.height()/2)
                 tabular.display(0)
-
+                tabular.tree.header().setSectionsMovable(False)
 
         if window_info["type"] == "Tabular":
             signals_ = [
