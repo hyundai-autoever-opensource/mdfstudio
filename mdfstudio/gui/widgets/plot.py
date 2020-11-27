@@ -2875,7 +2875,8 @@ class _Plot(pg.PlotWidget):
             item.hide()
             item.setParent(None)
 
-            deleted_names.append(self.signals[i].name)
+            if self.signals[i].enable:
+                deleted_names.append(self.signals[i].name)
 
             sig = self.signals.pop(i)
 
