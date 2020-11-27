@@ -1517,6 +1517,7 @@ class FileWidget(WithMDIArea, Ui_file_widget, QtWidgets.QWidget):
         iterator = QtWidgets.QTreeWidgetItemIterator(self.filter_tree)
         channels = []
         rasters = []
+        columns = []
 
         if iterator.value() is None:
             QtWidgets.QMessageBox.warning(None, "Message",
@@ -1530,8 +1531,9 @@ class FileWidget(WithMDIArea, Ui_file_widget, QtWidgets.QWidget):
                 checked = True
                 group, index = item.entry
                 if index != 0xFFFFFFFFFFFFFFFF:
-                    channels.append((None, group, index))
+                    channels.append((item.name, group, index))
                     rasters.append(self.mdf.get_channel_metadata(item.name, group).sampling_rate)
+                    columns.append(item.name)
                     # self.scene().exportDialog.min = np.amin(self.all_timebase)
                     # self.scene().exportDialog.max = np.amax(self.all_timebase)
             iterator += 1
@@ -1698,6 +1700,7 @@ class FileWidget(WithMDIArea, Ui_file_widget, QtWidgets.QWidget):
                     "compression": compression,
                     "time_as_date": time_as_date,
                     "ignore_value2text_conversions" : self.ignore_value2text_conversions,
+                    "columns":columns
                 }
 
                 new_mdf = run_thread_with_progress(
