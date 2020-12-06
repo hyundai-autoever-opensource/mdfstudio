@@ -421,6 +421,9 @@ class MainWindow(WithMDIArea, Ui_PyMDFMainWindow, QtWidgets.QMainWindow):
         action = QtWidgets.QAction("&About", menu)
         action.triggered.connect(self.open_about)
         open_group.addAction(action)
+        action = QtWidgets.QAction("&Send feedback", menu)
+        action.triggered.connect(self.open_url)
+        open_group.addAction(action)
         action = QtWidgets.QAction("&Visit github page", menu)
         action.triggered.connect(self.github)
         open_group.addAction(action)
@@ -1231,4 +1234,4 @@ class MainWindow(WithMDIArea, Ui_PyMDFMainWindow, QtWidgets.QMainWindow):
         widget.exec_()
 
     def open_url(self, event):
-        webbrowser.open_new(r"https://moaform.com/q/mdBiwO")
+        webbrowser.open_new(r"https://moaform.com/q/Hch6ta")
